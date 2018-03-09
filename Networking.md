@@ -1,8 +1,8 @@
 NETWORKING
 ===========
-### Protocol
-- `Protocol` (giao thức) là một tập hợp các quy tắc chuẩn dành cho việc biểu diễn dữ liệu, phát tín hiệu,
-chứng thực và phát hiện lỗi dữ liệu
+Protocol
+-------------
+- `Protocol` (giao thức) là một tập hợp các quy tắc chuẩn dành cho việc biểu diễn dữ liệu, phát tín hiệu, chứng thực và phát hiện lỗi dữ liệu
 - Các máy tính và thiết bị muốn trao đổi thông tin với nhau đều phải có một protocol
 - Các protocol thường sẽ được chia thành nhiều bước, bên gửi sẽ thực hiện từ trên xuống để gửi,
 còn bên nhận sẽ thực hiện từ dưới lên để nhận
@@ -11,7 +11,8 @@ còn bên nhận sẽ thực hiện từ dưới lên để nhận
 - Giao thức kết nối: Kiểm soát đường truyền, dữ liệu gửi đi tuần tự (`sequence datagrams`), bên nhận sẽ gửi file `ACK` khi nhận được
 - Giao thức còn chia thành các giao thức định tuyến/không định tuyến để cho phép/không cho phép đi qua các thiết bị mạng như router
 
-### IP
+IP
+--------
 - `IP` (Internet Protocol) là một giao thức truyền thông chính trên internet 
 - IP là giao thức hướng dữ liệu sử dụng bởi host nguồn và đích để truyền dữ liệu liền mạch
 - Các dữ liệu mà IP gửi là các `gói` (`packet/datagram`)
@@ -21,7 +22,8 @@ còn bên nhận sẽ thực hiện từ dưới lên để nhận
 - Giao thức IP có trách nhiệm đặt `địa chỉ` cho các host, `đóng gói dữ liệu` vào các gói tin và `định tuyến` từ host nguồn sang host đích
 - Mỗi gói tin sẽ có 2 phần là `header` và `payload`. Header chứ `IP nguồn` và `IP đích` và các `siêu dữ liệu` (`metadata`) để định tuyến
 
-### Socket
+Socket
+--------
 - `Socket` là một `cổng logic` để một chương trình/máy dùng để kết nối với chương trình/máy khác.
 - Mỗi luồng socket bắt buộc phải có một `port` 
 - Socket có thể một lúc nhiều luồng nhưng phải khác `số hiệu cổng` (`port`)
@@ -29,7 +31,8 @@ còn bên nhận sẽ thực hiện từ dưới lên để nhận
 - Socket hoạt động theo các mô hình như `Client - Server`, `Peer - to - peer`
 - Các chương trình/máy muốn kết nối với nhau bằng socket bắt buộc phải biết port Socket và IP của chương trình/máy còn lại
 
-### TCP
+TCP
+---------
 - `TCP (Tranmission Control Protocol)` là giao thức giúp các ứng dụng trên các host có thể tạo kết nối với nhau để trao đổi dữ liệu hoặc gói tin
 - TCP là tầng trung gian giữa giao thức IP và ứng dụng.
 - khác với `UDP`, TCP đòi hỏi việc phải thiết lập kết nối trước khi bắt đầu gửi dữ liệu 
@@ -48,35 +51,41 @@ còn bên nhận sẽ thực hiện từ dưới lên để nhận
 - TCP sử dụng các port để định danh các ứng dụng gửi và nhận dữ liệu 
 - Một gói tin của TCP gồm 2 phàn chính là header (20bytes) và data. Phần header có các trường gồm: 	+ Source port, Destination port, Sequence number, ACK number, Data offset, Reserved, Flags (URG, ACK, PSH, RST, SYN, FIN), Window, Checksum và option, option là trường không bắt buộc phải có dữ liệu.
 
-### HTTP
+HTTP
+------------
 - `HTTP (HyperText Transfer Protocol)` là giao thức truyên tải siêu văn bản, là một giao thức ứng dụng trong bộ các giao thức TCP/IP
 - HTTP hoạt động dựa trên mô hình `Client - Server`. Lúc này Client sẽ là máy của người dùng sử dụng `browser` để truy cập web
 - Port mặc định của HTTP là `80`
 - HTTP là giao thức `connectionless (kết nối không liên tục)`, client - server chỉ kết nối khi gửi request và reponse, kết nối sẽ được đóng khi gửi xong
 - HTTP là `một phương tiện độc lập`, bất kỳ loại dữ liệu nào cũng có thể được gửi bởi HTTP
 - HTTP là `stateless`, sau khi kết nối xong client và server sẽ quên đi các địa chỉ
-- Các `request methods` của HTPT: `GET` `HEAD` `POST` `PUT` `DELETE` `CONNECT` `OPTIONS` `TRACE`, 2 phương thức được sử dụng nhiều nhất là HTTP Get và Post
+
+### HTTP Status Code
+- được server phản hồi khi nhận được request có 5 giá trị của ký tự đầu tiên:
+	+ 1xx: Thông tin (100 - Continue, 101 - Switching protocol,...)
+	+ 2xx: Thành công (200 - Successful, 201- Created,...)
+	+ 3xx: Điều hướng lại (301 - Moved permanetly, 302 - Moved temporarily,...)
+	+ 4xx: Lỗi từ client (400 - Bad request, 404 - Not found,...)
+	+ 5xx: Lỗi từ server (500 - Internal server error, 501 - Not implemented,...)
+### HTTP Caching
+- Khi server gửi http reponse trên header sẽ có 1 dòng `Cache-control` mà server yêu cầu cho client
+	+ `Cache-control: nosotr`or`Cache-control: no-cache, no-store, must-revalidate`, client sẽ không cache lại bất cứ thứ gì
+	+ `Cache-control: private/public`, chỉ được một user hiện hành sử dụng bộ cache này hay toàn bộ
+	+ `Cache-control: max-age=31536000`, Cache lại theo một khoảng thời gian, với 31536000 là được tính bằng giây, sau khoảng thời gian đó bộ cache sẽ tự động xoá
+	+ `Cache-control: must-revalidate`, client sẽ xác nhận lại các cache cũ đã hết hạn hoặc còn được sử dụng không 
+### HTTP Cookies 
+- HTTP Cookie là 1 phần dữ liệu mà server gửi về cho client, thường được sử dụng để lưu lại những tác vụ như đăng nhập, giỏ hàng, điểm game, hay là những dữ liệu cần lưu trong một khoảng thời gian. Trên header từ server gửi về sẽ có dòng `Set-Cookie: <cookiename>=<cookievalue>`
+- Mỗi cookie sẽ có một khoảng thời gian được trả về nhất định (ngắn) `Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT;`
+- Cookies được gửi từ server nên có thể dùng cookie để tiếp tục session tại một máy khác
+### HTTP Request Methods
+- HTTP định nghĩa một số phương thức để cho biết `hành động` dành cho các resource nhất định
+- Các `request methods` của HTTP: `GET` `HEAD` `POST` `PUT` `DELETE` `CONNECT` `OPTIONS` `TRACE` `PATH`, 2 phương thức được sử dụng nhiều nhất là HTTP Get và Post
+### HTTP Header
 - `HTTP Response`, Khi nhận một request, server sẽ response lại `trạng thái`, các `trường header`, `dòng trống` để chỉ định rằng header đã kết thúc, `một phần thân` thông báo 
-`
-HTTP/1.1 200 OK
-Date: Mon, 23 May 2005 22:38:34 GMT
-Content-Type: text/html; charset=UTF-8
-Content-Encoding: UTF-8
-Content-Length: 138
-Last-Modified: Wed, 08 Jan 2003 23:11:55 GMT
-Server: Apache/1.3.3.7 (Unix) (Red-Hat/Linux)
-ETag: "3f80f-1b6-3e1cb03b"
-Accept-Ranges: bytes
-Connection: close
-
-<html>
-<head>
-  <title>An Example Page</title>
-</head>
-<body>
-  Hello World, this is a very simple HTML document.
-</body>
-</html>
-`
-
+### HTTPS và HTTP
+- Trong HTTP thì "S" trong này có nghĩa là Secure, là HTTP có sử dụng thêm các chứng chỉ SSL hay TLS giúp mã hóa dữ liệu truyên tải, nói cách khác HTTPS là phiên bản an toàn hơn của HTTP, HTTPS sử dụng `port 443`, tất nhiên với bước mã hóa của HTTPS thì tốc độ truy cập sẽ không nhanh bằng HTTP
+### Về HTTP/2
+- HTTP/2 là bản nâng cấp mới nhất của giao thức HTTP. Ở HTTP/2 dữ liệu được truyền tải nhị ph thay vì dạng text như HTTP/1, giúp tác vụ được thực hiện hiệu quả và ít tốn thời gian hơn. Các header cũng sẽ được nén trước khi gửi đi kèm với những truy vấn mô tả, nguồn gốc, kiểu, độ dài,.. của dữ liệu
+- HTTP/2 giải quyết sự bất đồng bộ nên các truy vấn nhỏ hơn hoặc nhanh hơn có thể được xử lý sớm hơn (HTTP/1 theo 1 trật tự)
+- HTTP/2 cho phép xử lý nhiều truy vấn giữa server và cl
 
