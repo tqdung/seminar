@@ -82,10 +82,16 @@ HTTP
 - Các `request methods` của HTTP: `GET` `HEAD` `POST` `PUT` `DELETE` `CONNECT` `OPTIONS` `TRACE` `PATH`, 2 phương thức được sử dụng nhiều nhất là HTTP Get và Post
 ### HTTP Header
 - `HTTP Response`, Khi nhận một request, server sẽ response lại `trạng thái`, các `trường header`, `dòng trống` để chỉ định rằng header đã kết thúc, `một phần thân` thông báo 
+### HTTP Access Control
+- 
+### HTTP Content-Security-Policy
+- HTTP CSP giúp cho server có thể quản lý và kiểm soát tài nguyên tốt hơn
+- Syntax: `Content-Secủity-Policy:<policy-directive>;<policy-directive>`
+- Có 4 loại `Directives` chính : `Fetch Directives`, `Document directives`, `Navigation directives`, `Reporting directives` ngoài ra còn một số các directives khác
 ### HTTPS và HTTP
 - Trong HTTP thì "S" trong này có nghĩa là Secure, là HTTP có sử dụng thêm các chứng chỉ SSL hay TLS giúp mã hóa dữ liệu truyên tải, nói cách khác HTTPS là phiên bản an toàn hơn của HTTP, HTTPS sử dụng `port 443`, tất nhiên với bước mã hóa của HTTPS thì tốc độ truy cập sẽ không nhanh bằng HTTP
 ### Về HTTP/2
 - HTTP/2 là bản nâng cấp mới nhất của giao thức HTTP. Ở HTTP/2 dữ liệu được truyền tải nhị ph thay vì dạng text như HTTP/1, giúp tác vụ được thực hiện hiệu quả và ít tốn thời gian hơn. Các header cũng sẽ được nén trước khi gửi đi kèm với những truy vấn mô tả, nguồn gốc, kiểu, độ dài,.. của dữ liệu
 - HTTP/2 giải quyết sự bất đồng bộ nên các truy vấn nhỏ hơn hoặc nhanh hơn có thể được xử lý sớm hơn (HTTP/1 theo 1 trật tự)
-- HTTP/2 cho phép xử lý nhiều truy vấn giữa server và cl
+- HTTP/2 cho phép xử lý nhiều truy vấn giữa server và client
 
