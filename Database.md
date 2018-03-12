@@ -31,3 +31,26 @@ Col2 DataType,
 ColN DataType,
 PRIMARY KEY(1 or N Col)
 );`
+- DROP TABLE trong SQL `DROP TABLE table_name`
+- CREATE INDEX trong SQL `CREATE UNIQUE INDEX index_name ON table_name(col1,col2,...colN)`
+- DROP INDEX trong SQL `ALTER TABLE table_name DROP INDEX index_name`
+- ALTER TABLE trong SQL `ALTER TABLE table_name {ADD|DROP|MODIFY} col_name {type}`
+                        `ALTER TABLE table_name RENAME TO new_table_name`
+- INSERT INTO trong SQL `INSERT INTO table_name(col1,col2...colN) VALUES(vl1,vl2,...vlN)`
+- UPDATE trong SQL `UPDATE table_name SET col1 = val1,..coln = valN [Where = Condi]`
+- DELETE trong SQL `DELETE FROM table_name WHERE {Condition}`
+### Logic operator
+- Một số các toán tử logic có sẵn trong SQL
+    + `ALL` được sử dụng để so sánh một giá trị với tất cả giá trị trong tập giá trị khác
+    + `AND` cho phép sự tồn tại của nhiều điều kiện trong mệnh đề WHERE của một lệnh SQL
+    + `ANY` được sử dụng để so sánh một giá trị với bất kỳ giá trị thích hợp nào trong danh sách tùy theo điều kiện
+    + `BETWEEN` được sử dụng để tìm các giá trị mà là trong một tập giá trị, được cung cấp giá trị nhỏ nhất và giá trị lớn nhất
+    + `EXISTS`được sử dụng để tìm sự có mặt của một row trong một bảng đã cho mà thỏa mãn điều kiện cụ thể
+    + `IN` được sử dụng để so sánh một giá trị với một danh sách các giá trị hằng mà đã được xác định
+    + `LIKE` được sử dụng để so sánh một giá trị với các giá trị tương tự bởi sử dụng các toán tử Wildcard
+    + `NOT` đảo ngược ý nghĩa của toán tử logic khi được sử dụng cùng với toán tử logic đó
+    + `OR` được sử dụng để kết hợp nhiều điều kiện trong mệnh đề WHERE của một lệnh SQL
+    + `IS NULL` được sử dụng để so sánh một giá trị với một giá trị NULL
+    + UNIQUE tìm kiếm tính đơn nhất trong mỗi row của một bảng đã cho
+### Comparison & arithmetic operator
+- SQL hỗ trợ các toán tử so sánh gần giống với các ngôn ngữ lập trình khác như: `=` `!=` `<>` `>` `<` `>=` `<=` `!>` `!<`. Và các toán tử số học: `+` `-` `*` `/` `%`
