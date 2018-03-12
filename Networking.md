@@ -28,8 +28,10 @@ Socket
 - Mỗi luồng socket bắt buộc phải có một `port` 
 - Socket có thể một lúc nhiều luồng nhưng phải khác `số hiệu cổng` (`port`)
 - Socket sử dụng 2 `giao thức truyền tải` là `UDP` và `TCP`
+- Ngoài 2 giao thức cơ bản còn có `UDT`, giao thức UDP nhưng có handle (sắp xếp, đảm bảo dữ liệu)
 - Socket hoạt động theo các mô hình như `Client - Server`, `Peer - to - peer`
 - Các chương trình/máy muốn kết nối với nhau bằng socket bắt buộc phải biết port Socket và IP của chương trình/máy còn lại
+- Nói ngắn gọn `Socket = IP + Port`
 
 TCP
 ---------
@@ -56,10 +58,9 @@ HTTP
 - `HTTP (HyperText Transfer Protocol)` là giao thức truyên tải siêu văn bản, là một giao thức ứng dụng trong bộ các giao thức TCP/IP
 - HTTP hoạt động dựa trên mô hình `Client - Server`. Lúc này Client sẽ là máy của người dùng sử dụng `browser` để truy cập web
 - Port mặc định của HTTP là `80`
-- HTTP là giao thức `connectionless (kết nối không liên tục)`, client - server chỉ kết nối khi gửi request và reponse, kết nối sẽ được đóng khi gửi xong
+- HTTP là giao thức `connectionless (kết nối không liên tục)`, client - server chỉ kết nối khi gửi request và reponse, kết nối sẽ được đóng khi reponse đã trả về cho client
 - HTTP là `một phương tiện độc lập`, bất kỳ loại dữ liệu nào cũng có thể được gửi bởi HTTP
 - HTTP là `stateless`, sau khi kết nối xong client và server sẽ quên đi các địa chỉ
-
 ### HTTP Status Code
 - được server phản hồi khi nhận được request có 5 giá trị của ký tự đầu tiên:
 	+ 1xx: Thông tin (100 - Continue, 101 - Switching protocol,...)
@@ -79,19 +80,23 @@ HTTP
 - Cookies được gửi từ server nên có thể dùng cookie để tiếp tục session tại một máy khác
 ### HTTP Request Methods
 - HTTP định nghĩa một số phương thức để cho biết `hành động` dành cho các resource nhất định
-- Các `request methods` của HTTP: `GET` `HEAD` `POST` `PUT` `DELETE` `CONNECT` `OPTIONS` `TRACE` `PATH`, 2 phương thức được sử dụng nhiều nhất là HTTP Get và Post
+- Các `request methods` của HTTP: `GET` `HEAD` `POST` `PUT` `PATCH` `DELETE` `CONNECT` `OPTIONS` `TRACE` , 2 phương thức được sử dụng nhiều nhất là HTTP Get và Post
+- `POST` là một method có thể làm hầu hết mọi thứ trên HTTP
+- giữa `PUT` và `PATCH` cần phải phân biệt được là: `PUT` thao tác trên toàn bộ entity, còn `PATCH` dùng cho một chỉ định cụ thể như field
+- Sử dụng `HEAD` khi muốn check hoặc tracking, vì `HEAD` không trả về body nên dữ liệu rất nhẹ so với phương thức khác
 ### HTTP Header
-- `HTTP Response`, Khi nhận một request, server sẽ response lại `trạng thái`, các `trường header`, `dòng trống` để chỉ định rằng header đã kết thúc, `một phần thân` thông báo 
-### HTTP Access Control
-- 
+- `HTTP Response`, Khi nhận một request, server sẽ response lại `trạng thái`, các `trường header`, `dòng trống` để chỉ định rằng header đã kết thúc và `một phần thân` thông báo 
+### Cross-Origin Resource Sharing (CORS)
+- `CORS` là cơ chế sử dụng HTTP header để gán cho người dùng quyền truy cập vào tài nguyên của server bởi một domain khác
+- Các request dùng đến CORS là XMLHttpRequest, Fetch API, CSS, drawImage, Scripts 
 ### HTTP Content-Security-Policy
 - HTTP CSP giúp cho server có thể quản lý và kiểm soát tài nguyên tốt hơn
-- Syntax: `Content-Secủity-Policy:<policy-directive>;<policy-directive>`
+- Syntax: `Content-Security-Policy:<policy-directive>;<policy-directive>`
 - Có 4 loại `Directives` chính : `Fetch Directives`, `Document directives`, `Navigation directives`, `Reporting directives` ngoài ra còn một số các directives khác
 ### HTTPS và HTTP
 - Trong HTTP thì "S" trong này có nghĩa là Secure, là HTTP có sử dụng thêm các chứng chỉ SSL hay TLS giúp mã hóa dữ liệu truyên tải, nói cách khác HTTPS là phiên bản an toàn hơn của HTTP, HTTPS sử dụng `port 443`, tất nhiên với bước mã hóa của HTTPS thì tốc độ truy cập sẽ không nhanh bằng HTTP
 ### Về HTTP/2
-- HTTP/2 là bản nâng cấp mới nhất của giao thức HTTP. Ở HTTP/2 dữ liệu được truyền tải nhị ph thay vì dạng text như HTTP/1, giúp tác vụ được thực hiện hiệu quả và ít tốn thời gian hơn. Các header cũng sẽ được nén trước khi gửi đi kèm với những truy vấn mô tả, nguồn gốc, kiểu, độ dài,.. của dữ liệu
+- HTTP/2 là bản nâng cấp mới nhất của giao thức HTTP. Ở HTTP/2 dữ liệu được truyền tải nhị phân thay vì dạng text như HTTP/1, giúp tác vụ được thực hiện hiệu quả và ít tốn thời gian hơn. Các header cũng sẽ được nén trước khi gửi đi kèm với những truy vấn mô tả, nguồn gốc, kiểu, độ dài,.. của dữ liệu
 - HTTP/2 giải quyết sự bất đồng bộ nên các truy vấn nhỏ hơn hoặc nhanh hơn có thể được xử lý sớm hơn (HTTP/1 theo 1 trật tự)
 - HTTP/2 cho phép xử lý nhiều truy vấn giữa server và client
 
