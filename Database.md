@@ -2,7 +2,7 @@ DATABASE
 ===========
 Database
 ---------
-- Hiểu đơn giản thì `database` là mọi thứ mình thao tác trên internet hằng ngày, khi mở một trang web lên thì database là tệp những hình ảnh, mô tả, những thông tin đăng nhập, list nhạc
+- Hiểu đơn giản thì `database` là mọi thứ người dùng thao tác trên internet hằng ngày, khi mở một trang web lên thì database là tệp những hình ảnh, mô tả, những thông tin đăng nhập, list nhạc
 
 SQL
 --------
@@ -11,13 +11,13 @@ SQL
 - Trong SQL, dữ liệu sẽ được lưu dưới dạng `Table(bảng)`, mỗi bảng sẽ được định nghĩa bởi `Field(trường)` `Line/records(hàng)` `Column(cột)` và các `Key (Primary key, Foreign key)`
 ### Constraint
 - SQL sử dụng các `Constraint(ràng buộc)` để đặt các quy tắc trong bảng, các ràng buộc phổ biến và có sẵn trong SQL:
-    + NOT NULL: Đảm bảo cột này không thể có giá trị NULL
-    + DEFAULT: Cung cấp một giá trị đã xác định khi không có dữ liệu truyền vào
-    + UNIQUE: Đảm bảo tất cả giá trị trong một cột là khác nhau
-    + PRIMARY KEY: Dùng để nhận diện theo một cách duy nhất
-    + FOREIGN KEY: Khóa ngoại được nhận diện duy nhất trong một bảng khác
-    + CHECK: Đảm bảo giá trị của cột phải thỏa mãn điều kiện nào đó
-    + INDEX: Sử dụng để tạo và lấy dữ liệu từ DB nhanh chóng
+    + `NOT NULL` Đảm bảo cột này không thể có giá trị NULL
+    + `DEFAULT` Cung cấp một giá trị đã xác định khi không có dữ liệu truyền vào
+    + `UNIQUE` Đảm bảo tất cả giá trị trong một cột là khác nhau
+    + `PRIMARY KEY` Dùng để nhận diện theo một cách duy nhất
+    + `FOREIGN KEY` Khóa ngoại được nhận diện duy nhất trong một bảng khác
+    + `CHECK` Đảm bảo giá trị của cột phải thỏa mãn điều kiện nào đó
+    + `INDEX` Sử dụng để tạo và lấy dữ liệu từ DB nhanh chóng
 ### NULL
 - Giá trị `NULL` của một bảng xác định rằng trường này bị đã bị `để trống` trong khi tạo record. Khác hòan toàn với giá trị `0` hoặc chứa `khoảng trống (space)`, lúc này 0 và space vẫn đc xem là giá trị
 ### SQL Basic Syntax
@@ -51,6 +51,25 @@ PRIMARY KEY(1 or N Col)
     + `NOT` đảo ngược ý nghĩa của toán tử logic khi được sử dụng cùng với toán tử logic đó
     + `OR` được sử dụng để kết hợp nhiều điều kiện trong mệnh đề WHERE của một lệnh SQL
     + `IS NULL` được sử dụng để so sánh một giá trị với một giá trị NULL
-    + UNIQUE tìm kiếm tính đơn nhất trong mỗi row của một bảng đã cho
+    + `UNIQUE` tìm kiếm tính đơn nhất trong mỗi row của một bảng đã cho
 ### Comparison & arithmetic operator
-- SQL hỗ trợ các toán tử so sánh gần giống với các ngôn ngữ lập trình khác như: `=` `!=` `<>` `>` `<` `>=` `<=` `!>` `!<`. Và các toán tử số học: `+` `-` `*` `/` `%`
+- SQL hỗ trợ các toán tử so sánh gần giống với các ngôn ngữ lập trình khác như: `=` `!=` `<>` `>` `<` `>=` `<=` `!>` `!<`, và các toán tử số học: `+` `-` `*` `/` `%`
+### Alias
+- Sử dụng từ khóa `AS` để đặt `Alias (Định danh)` cho một bảng hoặc một trường trong bảng `SELECT price AS money` hay `SELECT * FROM products AS PR`
+### Join
+- `INNER JOIN` trả về kết quả các record mà hai bảng khớp nhau
+- `OUTER JOIN` lấy về các record xuất hiện 1 trong 2 bảng
+- `CROSS JOIN` trả về kết quả là tích của 2 bảng
+- `LEFT/RIGHT JOIN` trả về kết quả là record xuất hiện 2 bảng nhưng ưu tiên cho bên trái/phải (left/right)
+### Subquery
+- SQL hỗ trợ các query lồng nhau để thực hiện các cú pháp query phức tạp hơn mà cách select bình thường khó có thể lọc được, `SELECT * FROM A WHERE A.SOMETHING IN (SELECT B.SOMETHING FROM B)`, tương đương với lọc ra những dữ liệu từ bảng A mà có trong bảng B
+### CTE
+- `SQL CTE (Common Table Expression)` nhằm giúp người viết đơn giản việc query những câu có nhiều joinss và subqueries, CTE dùng để sử dụng kết quả của một query khác nhiều lần trong cùng 1 query, dùng CTE bằng từ khóa `WITH`, sau đó một bảng tạm sẽ được tạo ra để người dùng có thể gọi lại `WITH st (SELECT * FROM AB)`
+
+
+MySQL
+---------
+- MySQL là một hệ quản trị cơ sử dữ liệu open source, tốc độ cao, ổn định và dễ sử dụng, hoạt động được trên nhiều OS khác nhau như UNIX, Linux, Windows, MacOS,....
+- MySQL sử dụng ngôn ngữ truy vấn SQL
+- Về căn bản MySQL cũng có các lệnh lọc dữ liệu `SELECT FROM WHERE` hay thao tác dữ liệu `INSERT` `UPDATE` `CREATE` `DELETE`, toán tử giống bên SQL như `ALL` `AND` `ANY` `IN`,...  cũng có các Constraint `PRIMARY KEY` `FOREIGN KEY` `UNIQUE` `INDEX`,...
+- MySQL hỗ trợ thêm từ khóa `LIMIT` để hạn chế số record được lấy lên
