@@ -89,7 +89,7 @@ JDBC
     4. ResultSet
 - Flow của JDBC: Load Driver & khởi tạo Connection > Tạo một Statement và thực hiện query > Sử dụng và xử lý các data > Đóng/hủy ResultSet, Statement, Connection
 ### JDBC Driver
-- ``JDBC driver` là tập hợp các `class của Java` tương tác với một `CSDL cụ thể `dựa trên `MySQL`
+- `JDBC driver` là tập hợp các `class của Java` tương tác với một `CSDL cụ thể `dựa trên `MySQL`
 ### Connection
 - Trong Java App, thông qua `Connection object`, người dùng có thể tương tác với CSDL
 ### Statement 
