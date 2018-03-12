@@ -65,11 +65,55 @@ PRIMARY KEY(1 or N Col)
 - SQL hỗ trợ các query lồng nhau để thực hiện các cú pháp query phức tạp hơn mà cách select bình thường khó có thể lọc được, `SELECT * FROM A WHERE A.SOMETHING IN (SELECT B.SOMETHING FROM B)`, tương đương với lọc ra những dữ liệu từ bảng A mà có trong bảng B
 ### CTE
 - `SQL CTE (Common Table Expression)` nhằm giúp người viết đơn giản việc query những câu có nhiều joinss và subqueries, CTE dùng để sử dụng kết quả của một query khác nhiều lần trong cùng 1 query, dùng CTE bằng từ khóa `WITH`, sau đó một bảng tạm sẽ được tạo ra để người dùng có thể gọi lại `WITH st (SELECT * FROM AB)`
-
+### Set Operator
+- `UNION | UNION ALL` ,toán tử `UNION` giúp người dùng kết hợp kết quả của 2 query, sau đó trả về những record của cả 2 query `Select * From A UNION Select * From B`, nhưng với `UNION ALL` thì kết quả trả về sẽ có cả những kết qủa trùng nhau
+- `INTERSECT` là toán tử trả về những kết quả trùng nhau (giao nhau) giữa 2 query cú pháp tương tự UNION
+- `MINUS` là toán tử trừ, ta có query A MINUS query B sẽ cho ra kết quả của A mà B không có
 
 MySQL
 ---------
 - MySQL là một hệ quản trị cơ sử dữ liệu open source, tốc độ cao, ổn định và dễ sử dụng, hoạt động được trên nhiều OS khác nhau như UNIX, Linux, Windows, MacOS,....
 - MySQL sử dụng ngôn ngữ truy vấn SQL
 - Về căn bản MySQL cũng có các lệnh lọc dữ liệu `SELECT FROM WHERE` hay thao tác dữ liệu `INSERT` `UPDATE` `CREATE` `DELETE`, toán tử giống bên SQL như `ALL` `AND` `ANY` `IN`,...  cũng có các Constraint `PRIMARY KEY` `FOREIGN KEY` `UNIQUE` `INDEX`,...
-- MySQL hỗ trợ thêm từ khóa `LIMIT` để hạn chế số record được lấy lên
+- MySQL hỗ trợ thêm từ khóa như:
+    + `LIMIT` để hạn chế số record được lấy lên
+    + `INSERT IGNORE`, Với `INSERT` khi insert nhiều rows mà có 1 rows bị lỗi thì sẽ return về lỗi và không có dòng nào được insert vào, với `INSERT IGNORE` thì những dòng nào bị lỗi sẽ bị bỏ qua, những dòng đúng vẫn được insert vào db 
+- Còn lại hầu hết MySQL đều giống SQL, và có những `Procedure`, `Triggers`, `Views`,...
+
+JDBC
+----------
+- JDBC là bộ API cung cấp các interface cho người dùng bao gồm các thành phần
+    1. JDBC Driver
+    2. Connection
+    3. Statement
+    4. ResultSet
+- Flow của JDBC: Load Driver & khởi tạo Connection > Tạo một Statement và thực hiện query > Sử dụng và xử lý các data > Đóng/hủy ResultSet, Statement, Connection
+### JDBC Driver
+- ``JDBC driver` là tập hợp các `class của Java` tương tác với một `CSDL cụ thể `dựa trên `MySQL`
+### Connection
+- Trong Java App, thông qua `Connection object`, người dùng có thể tương tác với CSDL
+### Statement 
+- Để thực hiện một câu `query`, người dùng cần sử dụng một `Statement object` thông qua `Connection object`
+### ResultSet
+- Sau khi thực hiện một lệnh query từ DB, người dùng sẽ nhận được ResultSet object. ResultSet object sẽ cung cấp các API cho phép truy cập kết quả của lệnh query
+### Connecting to MySQL
+- Để connect vào MySQL bằng JDBC ta cần thực hiện các lệnh
+* Khai báo Connection : `Connection conn = null;`
+* khai báo các param:
+`String url = "jdbc:mysql://localhost:3306/mysqljdbc";`
+`String user = "root";`
+`String password = "secret";`
+Với `localhost` là `servername` ,`3306` là `port` và `mysqljdbc` là `tên database`, `user` và `password` là tùy theo cấu hình MySQL của người dùng
+* Tạo connection: `conn = DriverManager.getConnection(url,user,password);`
+Nên sử dụng `SQLException` để bắt lỗi của SQL vì có thể sai các thông số ở trên
+- Khi thao tác xong với db thì ta sử dụng `conn.close();` để đóng kết nối Connection
+### Query Data MySQL
+- Tao một `Statement object` thông qua Connection object: `Statement stmt = conn.createStatement();`
+- Sau khi tạo Statement object, người dùng có thể đưa vào lệnh query để thực hiện với DB và nhận kết quả bằng `ResultSet`:
+`ResultSet rs = stmt.executeQuery("Select * From a_table);`
+hoặc `String sql = "Select * From a_table;`
+     `ResultSet rs = stmt.executeQuery(sql);`
+- Sau khi có `ResultSet`, người dùng có thể lấy dữ liệu để thao tác bằng function `next()` để lấy một record hoặc `getString("fieldname")` để lấy trường `fieldname`
+- Khi thao tác xong thì đóng các object `rs.close();` `stmt.close()`
+### 
+- Trên là một số thao tác cơ bản của JDBC trong java, người dùng có thể sử dụng tương tự các query `UPDATE` `DELETE` `INSERT`... tương tự bằng Statement
