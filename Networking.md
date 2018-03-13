@@ -99,4 +99,4 @@ HTTP
 - HTTP/2 là bản nâng cấp mới nhất của giao thức HTTP. Ở HTTP/2 dữ liệu được truyền tải nhị phân thay vì dạng text như HTTP/1, giúp tác vụ được thực hiện hiệu quả và ít tốn thời gian hơn. Các header cũng sẽ được nén trước khi gửi đi kèm với những truy vấn mô tả, nguồn gốc, kiểu, độ dài,.. của dữ liệu
 - HTTP/2 giải quyết sự bất đồng bộ nên các truy vấn nhỏ hơn hoặc nhanh hơn có thể được xử lý sớm hơn (HTTP/1 theo 1 trật tự)
 - HTTP/2 cho phép xử lý nhiều truy vấn giữa server và client
-
+- Với ngày xưa HTTP/1 xử dụng giao thức truyền tải `half-duplex` thì một thiết bị/host chỉ có thể đảm nhiệm 1 vai trò là `thu` hoặc `phát` tín hiệu trong cùng `1 thời điểm` thì giờ HTTP/2 đã sử dụng `full-duplex` , với giao thức truyền tải này một thiết bị/host có thể vừa thu vừa phát cùng lúc giúp cho việc giao tiếp tốt hơn và nhanh hơn. ngoài ra còn có `simple mode`, tức là một thiết bị chỉ đóng vai trò thu hoặc phát cố định
