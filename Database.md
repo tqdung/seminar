@@ -116,4 +116,4 @@ hoặc `String sql = "Select * From a_table;`
 - Sau khi có `ResultSet`, người dùng có thể lấy dữ liệu để thao tác bằng function `next()` để lấy một record hoặc `getString("fieldname")` để lấy trường `fieldname`
 - Khi thao tác xong thì đóng các object `rs.close();` `stmt.close()`
 ### 
-- Trên là một số thao tác cơ bản của JDBC trong java, người dùng có thể sử dụng tương tự các query `UPDATE` `DELETE` `INSERT`... tương tự bằng Statement
+- Ngoài ra khi muốn thực hiện các lệnh `non-query` như `INSERT` `UPDATE` `DELETE` thì người dùng cần sử dụng class `PreparedStatement`. Thao tác: `String sqlInsert = "insert into skills values(6,'C++')";` để tạo 1 insert mới vô bảng `skills` với giá trị `id = 6` và `name = "C++"`, tạo 1 preparedstatement `PreparedStatement pstm = conn.prepareStatement(sqlInsert);`, execute các dòng lệnh đã được đưa vào preparedstatement `pstm.executeUpdate();` 
