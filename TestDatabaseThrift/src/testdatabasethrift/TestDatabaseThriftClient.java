@@ -29,23 +29,35 @@ public class TestDatabaseThriftClient {
         skillManager.Iface clientThrift = new skillManager.Client(protocol);     
          
         
-//        Skill skill1 = client.findByID(4);
+//        Skill skill1 = clientThrift.findByID(4);
 //        System.out.println(skill1.name);
-        
-//        Skill insertSkill = new Skill(9,"C#");
-//        Skill skill2 = client.insertSkill(insertSkill);
+//        
+//        Skill insertSkill = new Skill(1,"JavaScript");
+//        Skill skill2 = clientThrift.insertSkill(insertSkill);
 //        System.out.println(skill2.name);
-
-//        client.deleteByID(9);
-//        Skill updateSkill = new Skill(9,"F#");
-//        Skill skill3 = client.updateByID(updateSkill);
-//        System.out.println(skill3.name);
-        
+//
+//        clientThrift.deleteByID(2);
+//        Skill updateSkill = new Skill(10,"Shell");
+//        Skill skill3 = clientThrift.updateByID(updateSkill);
+////        System.out.println(skill3.name);
+//        
+//        List<Skill> arrSkills = new ArrayList<Skill>();
+//        arrSkills = clientThrift.findAllSkills();
+//        for(int i=0;i<arrSkills.size();i++){
+//            System.out.println(arrSkills.get(i).id +" "+ arrSkills.get(i).name);
+//        }
         List<Skill> arrSkills = new ArrayList<Skill>();
-        arrSkills = clientThrift.findAllSkills();
-        for(int i=0;i<arrSkills.size();i++){
-            System.out.println(arrSkills.get(i).id +" "+ arrSkills.get(i).name);
-        }
+        Skill skill1 = new Skill(11,"ABC");
+        Skill skill2 = new Skill(12,"DEF");
+        arrSkills.add(skill1);
+        arrSkills.add(skill2);
+//        
+//        List<Skill> arrSkillsGet = new ArrayList<Skill>();
+//        arrSkillsGet = clientThrift.multiInsert(arrSkills);
+//        for(int i=0;i<arrSkills.size();i++)
+//            System.out.println(arrSkillsGet.get(i).name);
+
+        clientThrift.multiDelete(arrSkills);
         
         transport.close();
         } catch (TException x) {
