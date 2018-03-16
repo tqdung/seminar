@@ -39,7 +39,7 @@ public class TestDatabaseThriftClient {
 //        clientThrift.deleteByID(2);
 //        Skill updateSkill = new Skill(10,"Shell");
 //        Skill skill3 = clientThrift.updateByID(updateSkill);
-////        System.out.println(skill3.name);
+//        System.out.println(skill3.name);
 //        
 //        List<Skill> arrSkills = new ArrayList<Skill>();
 //        arrSkills = clientThrift.findAllSkills();
@@ -56,7 +56,7 @@ public class TestDatabaseThriftClient {
 //        arrSkillsGet = clientThrift.multiInsert(arrSkills);
 //        for(int i=0;i<arrSkills.size();i++)
 //            System.out.println(arrSkillsGet.get(i).name);
-
+//
 //        clientThrift.multiDelete(arrSkills);
         
         transport.close();

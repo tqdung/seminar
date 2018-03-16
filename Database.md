@@ -78,8 +78,18 @@ MySQL
 - MySQL hỗ trợ thêm từ khóa như:
     + `LIMIT` để hạn chế số record được lấy lên
     + `INSERT IGNORE`, Với `INSERT` khi insert nhiều rows mà có 1 rows bị lỗi thì sẽ return về lỗi và không có dòng nào được insert vào, với `INSERT IGNORE` thì những dòng nào bị lỗi sẽ bị bỏ qua, những dòng đúng vẫn được insert vào db 
+### Insert dupplicate
+- Khi insert vào SQL, đôi khi người dùng sẽ bị đưa vào những dữ liệu trùng lắp, khiến SQL thông báo lỗi
+- MySQL hỗ trợ lệnh `INSERT....ON DUPPLICATE UPDATE`, nếu insert bị trùng key, thì hệ thống sẽ update lại dữ liệu, nhưng không thay đổi key
+```
+INSERT INTO t1 (a,b,c) VALUES (1,2,3)
+  ON DUPLICATE KEY UPDATE c=3;
+INSERT INTO t1 (a,b,c) VALUES (1,2,3)
+  ON DUPLICATE KEY UPDATE c=9;
+```
+- Đoạn code trên sẽ không bị lỗi và c sẽ bị thay đổi `c=9` sau 2 lần insert 
+###
 - Còn lại hầu hết MySQL đều giống SQL, và có những `Procedure`, `Triggers`, `Views`,...
-
 JDBC
 ----------
 - JDBC là bộ API cung cấp các interface cho người dùng bao gồm các thành phần

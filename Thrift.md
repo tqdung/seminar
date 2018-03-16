@@ -3,17 +3,18 @@ THRIFT(JAVA)
 -`Thrift` là `IDL (interface definition language)` và là một giao thức (protocol) truyền tải dữ liệu dưới dạng `nhị phân (binary)`. Là opensource thuộc `Apache`
 - Thrift cho phép người dùng định nghĩa `datatypes`, `service interface` bằng ngôn ngữ trung lập (file định dạng .thrift). Sau đó `Thrift compiler` sẽ build các file này thành file class. Ở server, người dùng sẽ implement method từ file class Thrift cho client gọi thông qua service interface được định nghĩa
 - Hiện thrift hỗ trợ các ngôn ngữ `C++` `Java` `PHP` `Python` `Ruby`
-- Tóm lại thirft cung cấp các giao thức để giao tiếp giữa client với server
+- Thrift sử dụng Socket chứa Thrift protocol
+- Tóm lại thirft cung cấp các giao thức để giao tiếp giữa client với server và hỗ trợ generate ra các ngôn ngữ phù hợp để lập trình viên có thể implements/override
 
 ### Thrift compiler
 -`Thrift compiler` là tool được sử dụng để build file .thrift thành các class file tương ứng mà người dùng có thể cài đặt
 
 ### Type
 - Các loại dữ liệu mà Thrift đơn giản: `bool` `byte` `i16` `i32` `i64` `double` `string`, ngoài ra còn có kiểu `binary`
-
+- Các kiểu `i16` `i32` `i64` tương tự các kiểu `short` `int` `long` trong java
 ### Containers
 - `Containers` của Thrift gồm `list` `set` và `map`
-    + `list` tương tự vector của c++, ArrayList của Java,...
+    + `list` tương tự vector của C++, ArrayList của Java,...
     + `set` tương tự như set của C++, HashSet của Java,...
     + `map` tương tự map của C++ và HashMap Java,...
 

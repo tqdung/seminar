@@ -7,6 +7,7 @@ package testdatabasethrift;
 
 import com.duong.skill.Skill;
 import com.duong.skill.skillManager;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.util.List;
 import org.apache.thrift.TException;
 import java.sql.Connection;
