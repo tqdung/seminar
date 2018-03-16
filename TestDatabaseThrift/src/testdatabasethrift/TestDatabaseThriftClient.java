@@ -32,7 +32,7 @@ public class TestDatabaseThriftClient {
 //        Skill skill1 = clientThrift.findByID(4);
 //        System.out.println(skill1.name);
 //        
-//        Skill insertSkill = new Skill(1,"JavaScript");
+//        Skill insertSkill = new Skill(20,"JavaScript");
 //        Skill skill2 = clientThrift.insertSkill(insertSkill);
 //        System.out.println(skill2.name);
 //
@@ -46,18 +46,18 @@ public class TestDatabaseThriftClient {
 //        for(int i=0;i<arrSkills.size();i++){
 //            System.out.println(arrSkills.get(i).id +" "+ arrSkills.get(i).name);
 //        }
-        List<Skill> arrSkills = new ArrayList<Skill>();
-        Skill skill1 = new Skill(11,"ABC");
-        Skill skill2 = new Skill(12,"DEF");
-        arrSkills.add(skill1);
-        arrSkills.add(skill2);
+//        List<Skill> arrSkills = new ArrayList<Skill>();
+//        Skill skill1 = new Skill(11,"ABC");
+//        Skill skill2 = new Skill(12,"DEF");
+//        arrSkills.add(skill1);
+//        arrSkills.add(skill2);
 //        
 //        List<Skill> arrSkillsGet = new ArrayList<Skill>();
 //        arrSkillsGet = clientThrift.multiInsert(arrSkills);
 //        for(int i=0;i<arrSkills.size();i++)
 //            System.out.println(arrSkillsGet.get(i).name);
 
-        clientThrift.multiDelete(arrSkills);
+//        clientThrift.multiDelete(arrSkills);
         
         transport.close();
         } catch (TException x) {

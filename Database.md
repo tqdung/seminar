@@ -117,3 +117,36 @@ hoặc `String sql = "Select * From a_table;`
 - Khi thao tác xong thì đóng các object `rs.close();` `stmt.close()`
 ### 
 - Ngoài ra khi muốn thực hiện các lệnh `non-query` như `INSERT` `UPDATE` `DELETE` thì người dùng cần sử dụng class `PreparedStatement`. Thao tác: `String sqlInsert = "insert into skills values(6,'C++')";` để tạo 1 insert mới vô bảng `skills` với giá trị `id = 6` và `name = "C++"`, tạo 1 preparedstatement `PreparedStatement pstm = conn.prepareStatement(sqlInsert);`, execute các dòng lệnh đã được đưa vào preparedstatement `pstm.executeUpdate();` 
+### Batch query
+- Khi muốn thực hiện `non-query` một loạt nhiều dòng khác nhau thì người dùng cần sử dụng tới `Batch`
+- Khi muốn Insert nhiều dòng thì câu lệnh sql sẽ chứa giá trị là `?` 
+```
+String sql = "insert into skills values(?)";
+PreparedStatement pstm = conn.prepareStatement(sql);
+pstm.setString("New name");
+pstm.addBatch();
+```
+- Với mỗi lần `set` và `addBatch` thì đã có một record được thêm vào. để Update lại CSDL cần sử dụng `pstm.executeBatch()`. Các lệnh `UPDATE` `DELETE` cũng thực hiện tương tự
+### Return generated id
+- Khi thực hiện một lệnh `INSERT`, người dùng có thể trả vệ một ID mà hệ thống tự tạo ra trong CSDL, vậy để lấy và sử dụng ID đó, JDBC có hỗ trợ sử dụng
+```
+String sql = "insert into skills values(?)";
+PreparedStatement pstm = conn.prepareStatement(sql);
+pstm.setString("New name");
+pstm.executeUpdate();
+//Get the ID
+ResultSet rs = pstm.getGeneratedKeys();
+rs.next();
+int newID = rs.getLong(1);
+```
+### Connection pooling
+- Trọng JDBC có hỗ trợ `Connection pooling`, là một nhóm các connection được tạo ra khi khai báo
+- Mục đích sử dụng Connection pooling là để lưu lại các Connection có thể sử dụng lại thay vì hủy connection sau khi xong công việc
+- Khai báo connection pooling, cần phải có class ComboPooledDataSource
+```
+comboPooledDataSource = new ComboPooledDataSource();
+comboPooledDataSource.setDriverClass("com.mysql.jdbc.Driver");
+comboPooledDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/testdb");
+comboPooledDataSource.setUser("root");
+comboPooledDataSource.setPassword("secret");
+```
