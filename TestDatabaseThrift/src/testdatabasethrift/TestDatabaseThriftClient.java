@@ -13,31 +13,22 @@ import com.duong.skill.skillManager;
 import com.duong.skill.Skill;
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
 /**
  *
  * @author hoang
  */
 public class TestDatabaseThriftClient {
     public static void main(String [] args) throws Exception {
-        Server server = new Server(8081);
-        ServletContextHandler context = new ServletContextHandler(server, "/example");
-	context.addServlet(ServletHandler.class, "/");
         TTransport transport;
         try {
 
-        transport = new TSocket("localhost", 8080);
-        transport.open();
-        TProtocol protocol = new  TBinaryProtocol(transport);
-        skillManager.Iface clientThrift = new skillManager.Client(protocol);
-        
-        
-        server.start();
-        
-        
-        Skill skill1 = clientThrift.findByID(4);
-        System.out.println(skill1.name);
+            transport = new TSocket("localhost", 8080);
+            transport.open();
+            TProtocol protocol = new  TBinaryProtocol(transport);
+            skillManager.Iface clientThrift = new skillManager.Client(protocol);
+
+//        Skill skill1 = clientThrift.findByID(4);
+//        System.out.println(skill1.name);
 //        
 //        Skill insertSkill = new Skill(20,"JavaScript");
 //        Skill skill2 = clientThrift.insertSkill(insertSkill);

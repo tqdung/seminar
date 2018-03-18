@@ -66,9 +66,10 @@ public class SkillManagerHandler implements skillManager.Iface {
     @Override
     public Skill findByID(int id) throws TException {
         Skill skill = new Skill();
-        String sql = "select * from skills where id =" + id;
+        String sql = "select * from skills where id = ?";
         try (Connection conn = poolCnn.getConnection()) {
-            try (Statement stm = conn.createStatement()) {
+            try (PreparedStatement stm = conn.prepareStatement(sql)) {
+                stm.setInt(1, id);
                 ResultSet rs = stm.executeQuery(sql);
                 rs.first();
                 skill.id = rs.getInt("id");
@@ -84,9 +85,10 @@ public class SkillManagerHandler implements skillManager.Iface {
 
     @Override
     public void deleteByID(int id) throws TException {
-        String sql = "delete from skills where id =" + id;
+        String sql = "delete from skills where id = ?";
         try (Connection conn = poolCnn.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException e) {
@@ -96,9 +98,11 @@ public class SkillManagerHandler implements skillManager.Iface {
 
     @Override
     public Skill updateByID(Skill skill) throws TException {
-        String sql = "update skills set name ='" + skill.name + "' where id =" + skill.id;
+        String sql = "update skills set name = ? where id = ?";
         try (Connection conn = poolCnn.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(2,skill.name);
+            pstm.setInt(1, skill.id);
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException e) {
@@ -112,9 +116,11 @@ public class SkillManagerHandler implements skillManager.Iface {
         if (skill.id < 0) {
             return null;
         }
-        String sql = "insert into skills values('" + skill.id + "','" + skill.name + "')";
+        String sql = "insert into skills values(?, ?)";
         try (Connection conn = poolCnn.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, skill.id);
+            pstm.setString(2,skill.name);
             pstm.executeUpdate();
             pstm.close();
         } catch (SQLException e) {
