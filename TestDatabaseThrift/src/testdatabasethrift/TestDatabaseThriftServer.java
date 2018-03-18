@@ -6,6 +6,7 @@
 package testdatabasethrift;
 
 import com.duong.skill.skillManager;
+import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.thrift.server.TServer;
@@ -21,7 +22,7 @@ import org.apache.thrift.transport.TTransportException;
 public class TestDatabaseThriftServer {
     public static skillManager.Processor processor;
     public static SkillManagerHandler handler;
-    public static void main(String []args) throws TTransportException{
+    public static void main(String []args) throws TTransportException, PropertyVetoException{
         handler = new SkillManagerHandler();
         processor = new skillManager.Processor(handler);
         Runnable run = new Runnable(){

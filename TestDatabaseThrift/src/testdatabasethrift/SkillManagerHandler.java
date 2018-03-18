@@ -8,6 +8,7 @@ package testdatabasethrift;
 import com.duong.skill.Skill;
 import com.duong.skill.skillManager;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import java.beans.PropertyVetoException;
 import java.util.List;
 import org.apache.thrift.TException;
 import java.sql.Connection;
@@ -30,12 +31,21 @@ public class SkillManagerHandler implements skillManager.Iface {
     String user = "root";
     String pwd = "root";
     String url = "jdbc:mysql://localhost:3306/mysqljdbc";
+    private ComboPooledDataSource poolCnn;
 
+    public SkillManagerHandler() throws PropertyVetoException {
+        this.poolCnn = new ComboPooledDataSource();
+        this.poolCnn.setDriverClass("com.mysql.jdbc.Driver");
+        this.poolCnn.setJdbcUrl(url);
+        this.poolCnn.setUser(user);
+        this.poolCnn.setPassword(pwd);
+    }
+    
     @Override
     public List<Skill> findAllSkills() throws TException {
         List<Skill> arSkills = new ArrayList<Skill>();
 
-        try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
+        try (Connection conn = poolCnn.getConnection()) {
             try (Statement stm = conn.createStatement()) {
                 ResultSet rs = stm.executeQuery("select * from skills");
                 while (rs.next()) {
@@ -57,7 +67,7 @@ public class SkillManagerHandler implements skillManager.Iface {
     public Skill findByID(int id) throws TException {
         Skill skill = new Skill();
         String sql = "select * from skills where id =" + id;
-        try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
+        try (Connection conn = poolCnn.getConnection()) {
             try (Statement stm = conn.createStatement()) {
                 ResultSet rs = stm.executeQuery(sql);
                 rs.first();
@@ -75,7 +85,7 @@ public class SkillManagerHandler implements skillManager.Iface {
     @Override
     public void deleteByID(int id) throws TException {
         String sql = "delete from skills where id =" + id;
-        try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
+        try (Connection conn = poolCnn.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.executeUpdate();
             pstm.close();
@@ -87,7 +97,7 @@ public class SkillManagerHandler implements skillManager.Iface {
     @Override
     public Skill updateByID(Skill skill) throws TException {
         String sql = "update skills set name ='" + skill.name + "' where id =" + skill.id;
-        try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
+        try (Connection conn = poolCnn.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.executeUpdate();
             pstm.close();
@@ -103,7 +113,7 @@ public class SkillManagerHandler implements skillManager.Iface {
             return null;
         }
         String sql = "insert into skills values('" + skill.id + "','" + skill.name + "')";
-        try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
+        try (Connection conn = poolCnn.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.executeUpdate();
             pstm.close();
@@ -116,7 +126,7 @@ public class SkillManagerHandler implements skillManager.Iface {
     @Override
     public List<Skill> multiUpdate(List<Skill> skills) throws TException {
         String sql = "update skills set name = ? where id = ?";
-        try (Connection conn = DriverManager.getConnection(url, user, pwd)) {
+        try (Connection conn = poolCnn.getConnection()) {
             PreparedStatement pstm = conn.prepareStatement(sql);
             for(int i=0;i<skills.size();i++){
                 pstm.setString(1, skills.get(i).name);
@@ -134,7 +144,7 @@ public class SkillManagerHandler implements skillManager.Iface {
     @Override
     public void multiDelete(List<Skill> skills) throws TException {
         String sql = "delete from skills where id = ?";
-        try (Connection conn = DriverManager.getConnection(url,user,pwd)){
+        try (Connection conn = poolCnn.getConnection()){
             PreparedStatement pstm = conn.prepareStatement(sql);
             for(int i=0;i<skills.size();i++){
                 pstm.setInt(1, skills.get(i).id);
@@ -150,7 +160,7 @@ public class SkillManagerHandler implements skillManager.Iface {
     @Override
     public List<Skill> multiInsert(List<Skill> skills) throws TException {
         String sql = "insert into skills values(?,?)";
-        try (Connection conn = DriverManager.getConnection(url,user,pwd)){
+        try (Connection conn = poolCnn.getConnection()){
             PreparedStatement pstm = conn.prepareStatement(sql);
             for(int i=0;i<skills.size();i++){
                 pstm.setInt(1, skills.get(i).id);

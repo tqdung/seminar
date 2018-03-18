@@ -151,7 +151,8 @@ int newID = rs.getLong(1);
 ```
 ### Connection pooling
 - Trọng JDBC có hỗ trợ `Connection pooling`, là một nhóm các connection được tạo ra khi khai báo
-- Mục đích sử dụng Connection pooling là để lưu lại các Connection có thể sử dụng lại thay vì hủy connection sau khi xong công việc
+- Mục đích sử dụng Connection pooling là có thể mở cùng lúc nhiều các connection thể thực hiện các request đến cùng một thời điểm
+- Các connection sau khi hoàn thành tác vụ sẽ được trả về pool chứ không đóng hẳn kết nối -> tiết kiệm được thời gian và tài nguyên khi đóng/mở	
 - Khai báo connection pooling, cần phải có class ComboPooledDataSource
 ```
 comboPooledDataSource = new ComboPooledDataSource();
@@ -160,3 +161,5 @@ comboPooledDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/testdb");
 comboPooledDataSource.setUser("root");
 comboPooledDataSource.setPassword("secret");
 ```
+
+Lấy một connection trong pool ra để sử dụng `comboPooledDataSource.getConnection();`
