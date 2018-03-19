@@ -243,3 +243,56 @@ public class RichCompany implements RichCompanyTrade{
 ### Vấn đề
 - Các module cấp cao không nên phụ thuộc vào module cấp thấp mà cả 2 nên phụ thuộc vào abstraction/interface
 - Các class giao tiếp với nhau thông qua interface, không phải thông qua implementation
+Ví dụ
+```
+class Company{
+    private PoorCompany _poor;
+
+    public String getCompany(){
+        return _poor._name;
+    }
+
+    public float calculated(){
+        return _poor._money*5;
+    }
+}
+
+class PoorCompany{
+    float _money;
+    String _name;
+
+}
+```
+- Lúc này Company sẽ phụ thuộc hoàn toàn vào PoorCompany, nếu như cần xử lý thêm RichCompany hay NormalCompany thì class Company sẽ ngày càng phình to ra
+
+
+### Giải quyết
+- Tạo một interface Company, và class CompanyManager để có thể quản lý các Company mà không cần biết các Company khác đến từ đâu
+```
+public interface Company{
+    void calculated();
+}
+
+public class PoorCompany implements Company{
+    float _poorMoney;
+
+    public override calculated(){
+        return this._poorMoney*5;
+    }
+}
+
+public class RichCompany implements Company{
+    float _richMoney;
+    public override calculated(){
+        return this._richMoney*3;
+    }
+}
+
+public class CompanyManager{
+    private Company company;
+    public void calculatedCompany(Company company){
+        return company.calculated();
+    }
+}
+```
+- Trường hợp trên ta muốn mở rộng thêm một loại Company nào đos thì chỉ cần tạo ra 1 class mới và implements Company, không ảnh hưởng tới CompanyManger
