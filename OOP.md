@@ -3,43 +3,32 @@ OOP JAVA
 
 Tính trừu tượng (Abstraction)
 ----------------
-- `Tính trừu tượng` trong `hướng đối tượng` là để chỉ một lớp đối tượng được tạo ra bao gồm các `phương thức (method)` `thuộc tính (property/variable)`  làm đặc điểm chung cho các đối tượng khác. `Lớp trừu tượng` là lớp dùng để khai báo thuộc tính và phương thức cho các lớp khác sử dụng, được khai báo thông qua từ khóa `abstract`
-
-có abstract class Animal với hành động hienThiTiengKeu
+- `Tính trừu tượng` trong `hướng đối tượng` là để chỉ việc người sử dụng một class trừu tượng chỉ cần biết và gọi được các phương thức/thuộc tính của class đó. Có nghĩa là người sử dụng sẽ không cần quan tâm phương thức đó flow như thế nào, mà cần biết được `cách sử dụng` và `kết quả trả ra` của phương thức
+- Có abstract class Animal với hành động hienThiTiengKeu
 ```
 public abstract class Animal {
     private String tiengKeu;
      
     public abstract void hienThiTiengKeu();
 }
-```
- Các lớp con khi extend Animal thì đều biết được sẽ có phương thức hienThiTiengKeu 
-```
-public class Dog extends Animal {
- 
-    @Override
-    public void hienThiTiengKeu() {
-        System.out.println("Gâu");
-    }
- 
-}
-```
-```
+
 public class Cat extends Animal {
  
     @Override
     public void hienThiTiengKeu() {
+        //do something
+        //flow
         System.out.println("Meo");
     }
      
 }
 ```
 ```
- 
 public class Main {
  
     public static void main(String[] args) {
         Animal dog = new Dog();
+        //Người dùng biết method bên dưới là hiển thị tiếng kêu, kiểu trả về là void
         dog.hienThiTiengKeu();
          
         Animal cat = new Cat();
@@ -48,14 +37,14 @@ public class Main {
  
 }
 ```
-- Một lớp trừu tượng `không thể khởi tạo`. Nếu ta khai báo `Animal a = new Animal()` IDE sẽ tự động báo lỗi
+- Một lớp trừu tượng `không thể khởi tạo`. Nếu ta khai báo `Animal a = new Animal()` compiler sẽ tự động báo lỗi
 
 
 Tính kế thừa (Inheritance)
 --------------------
 - `Tính kế thừa` trong `hướng đối tượng` là kỹ thuật mà lớp con thừa kế lại các `phương thức` và `thuộc tính` của lớp cha, trừ các phương thức, thuộc tính `private`
 - Sử dụng kế thừa thông qua từ khóa `extends` và `implements`
-- Một class có thể `extends` một class (chỉ một), và `implements` nhiều interface. Một class có thể vừa `extends` vừa `implements` cùng lúc, các `interface` có thể `extends` `interface` khác nhưng không thể `implements`
+- Một class có thể `extends` một class (chỉ một), và `implements` nhiều interface. Một class có thể vừa `extends` vừa `implements` cùng lúc, các `interface` có thể `extends` `interface` khác nhưng không thể `implements`(đối với JDK7, hiện nay JDK8 đã hỗ trợ)
 ### Đơn kế thừa 
 ```
 class Animal {
@@ -191,18 +180,25 @@ Ví dụ
 ```
 public class Person {
     // khai báo các thuộc tính của đối tượng là private
-    private String cmnd;
+    private String sdt;
     private String hoTen;
 
-    public String getCmnd() {
-        return cmnd;
+    public void setSDT(String sdt) {
+        this.sdt = sdt.substring(1);
     }
-    public void setCmnd(String cmnd) {
-        this.cmnd = cmnd;
+
+    public String getSDTVN(){
+        return "+84 "+sdt;
     }
+
+    public String getSDTUS(){
+        return "0"+sdt;
+    }
+
     public String getHoTen() {
         return hoTen;
     }
+    
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
     }
@@ -211,7 +207,6 @@ public class Person {
 ```
 
 ```
-package vidu;
  
 public class TestPerson {
  
@@ -219,14 +214,13 @@ public class TestPerson {
         Person person = new Person();
          
         person.setHoTen("Trần Văn Bình");   
-        person.setCmnd("111");
-         
-        System.out.println("Tên: " + person.getHoTen() + ", số cmnd: " + person.getCmnd());
+        person.setSDT("0919000999");
+        System.out.println("Tên: " + person.getHoTen() + ", số dt VN: " + person.getSDTVN() + ", số đt US: " + person.getSDTUS());
     }
  
 }
 ```
-Output : `Tên: Trần Văn Bình, số cmnd: 111`
+Output : `Tên: Trần Văn Bình, số dtVN: 0919000999, số dt US: +84 918000999`
 
 super và final trong Java
 ---------
