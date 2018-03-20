@@ -8,7 +8,7 @@ SOLID
 - Một class chỉ nên giữ `một trách nhiệm/chức năng duy nhất`
 - Khi class có quá nhiều chức năng sẽ khiến nó trở nên cồng kềnh, mỗi khi mình cần edit một vài chức năng nào đó trong class có thể sẽ khiến cho các chức năng khác bị thay đổi/ảnh hưởng theo
 - Việc khó nhất trong nguyên tắc SRP là `gom nhóm, xác định chức năng`
-Ví dụ
+- Ví dụ
 ```
 public class Company{
     public String _name;
@@ -93,7 +93,7 @@ Ví dụ khi cần thêm thuộc tính và phương thức cho class Company
 class Company{
     String _name;
     boolean _isVip;
-    void vipCompany(){
+    public boolean vipCompany(){
         return _isVip;
     }
 }
@@ -105,7 +105,7 @@ class Company{
 ```
 class VipCompany extends Company{
     boolean _isVip;
-    void vipCompany(){
+    public boolean vipCompany(){
         return _isVip;
     }
 }
@@ -114,12 +114,14 @@ class VipCompany extends Company{
 ```
 class ImportanCompany extends Company{
     boolean _isImportant;
-    void isImportant(){
+    public boolean isImportant(){
         return _isImportant;
     }
 }
 ```
 - ImportantCompany Không hề ảnh hưởng tới VipCompany
+
+
 "L"iskov Substitution Principle
 ---------------
 
@@ -127,7 +129,7 @@ class ImportanCompany extends Company{
 - Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it
 - Nguyên tắc LSP đảm bảo các `instance của lớp con có thể thay thế instance của lớp cha` mà chương trình vẫn có thể `chạy ổn định`
 - Khi mở rộng phần mềm bằng các lớp con kế thừa, cần đảm bảo các lớp con này có thẻ `chạy được và đúng` những function mà lớp cha đã sử dụng trước đó
-Ví dụ vi phạm LSP
+- Ví dụ vi phạm LSP
 ```
 class Company(){
     void aboutMe(){
@@ -153,7 +155,7 @@ class ForeignCompany extends Company{
     }
 }
 ```
-Giả sử ta cần tất cả Company cho biêt sthông tin
+- Giả sử ta cần tất cả Company cho biết thông tin
 ```
 List<Company> allCompany =  new ArrayList<Company>();
 allCompany.add(new VipCompany);
@@ -177,7 +179,7 @@ for(int i=0;i<allCompany.size();i++){
 - Các class thường implement interface để `cá nhân hóa` các cài đặt của riêng nó
 - Các  module của một hệ thống thường sẽ giao tiếp với nhau `qua interface`
 - ISP muốn chỉ rằng nếu một interface quá lón thì nên tách  thành các interface nhỏ hơn. Nguyên nhân bởi vì nếu một interface quá lớn (100,200 method) thì một class chỉ cần  sử dụng 3 method của interface đó cũng cần phải override tất cả các method của interface đó
-Ví dụ 
+- Ví dụ 
 ```
 public interface CompanyTrade{
     void buyLikeRich();
@@ -196,7 +198,7 @@ public class PoorCompany{
 
     }
     public override buyLikePoor(){
-        return _buyLikePoor;
+        System.out.println("Buy like poor");
     }
 }
 ```
@@ -219,20 +221,20 @@ public interface RichCompanyTrade{
 - Như vậy các class Company khác nhau chỉ cần implement interface phù hợp
 ```
 public class PoorCompany implements CPoorCompanyTrade{
-    public override buyLikePoor(){
-        return _buyLikePoor;
+    public void override buyLikePoor(){
+        System.out.println("Buy like poor");
     }
 }
 
 public class NormalCompany implements NormalCompanyTrade{
-    public override buyLikeNormal(){
-        return _buyLikeNormal;
+    public void override buyLikeNormal(){
+        System.out.println("Buy like normal");
     }
 }
 
 public class RichCompany implements RichCompanyTrade{
-    public override buyLikeRich(){
-        return _buyLikeRich;
+    public void override buyLikeRich(){
+        System.out.println("Buy like rich");
     }
 }
 ```
@@ -243,7 +245,7 @@ public class RichCompany implements RichCompanyTrade{
 ### Vấn đề
 - Các module cấp cao không nên phụ thuộc vào module cấp thấp mà cả 2 nên phụ thuộc vào abstraction/interface
 - Các class giao tiếp với nhau thông qua interface, không phải thông qua implementation
-Ví dụ
+- Ví dụ
 ```
 class Company{
     private PoorCompany _poor;
@@ -270,27 +272,27 @@ class PoorCompany{
 - Tạo một interface Company, và class CompanyManager để có thể quản lý các Company mà không cần biết các Company khác đến từ đâu
 ```
 public interface Company{
-    void calculated();
+    float calculated();
 }
 
 public class PoorCompany implements Company{
     float _poorMoney;
 
-    public override calculated(){
+    public float override calculated(){
         return this._poorMoney*5;
     }
 }
 
 public class RichCompany implements Company{
     float _richMoney;
-    public override calculated(){
+    public float override calculated(){
         return this._richMoney*3;
     }
 }
 
 public class CompanyManager{
     private Company company;
-    public void calculatedCompany(Company company){
+    public float calculatedCompany(Company company){
         return company.calculated();
     }
 }

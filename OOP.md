@@ -132,31 +132,55 @@ class Circle extends Shape {
         System.out.println("drawing circle...");
     }
 }
- 
-class Triangle extends Shape {
-    void draw() {
-        System.out.println("drawing triangle...");
-    }
-}
- 
+
 class TestPolymorphism2 {
     public static void main(String args[]) {
-        Shape s;
-        s = new Rectangle();
-        s.draw();
-        s = new Circle();
-        s.draw();
-        s = new Triangle();
-        s.draw();
+        Shape s1 = new Shape();
+        Shape s2 = new Rectangle();
+        Shape s3 = new Circle();
+        s1.draw();
+        s2.draw();
+        s3.draw();
     }
 }
 ```
 Output
 ```
+drawing....
 drawing rectangle...
 drawing circle...
-drawing triangle...
 ```
+```
+class Shape {
+    void draw() {
+        System.out.println("drawing...");
+    }
+}
+ 
+class Rectangle extends Shape {
+    void draw() {
+        System.out.println("drawing rectangle...");
+    }
+}
+ 
+class Circle extends Shape {
+    public static void main(String args[]) {
+        Shape s1 = new Shape();
+        Shape s2 = new Rectangle();
+        Shape s3 = new Circle();
+        s1.draw();
+        s2.draw();
+        s3.draw();
+    }
+}
+```
+Output
+```
+drawing....
+drawing rectangle...
+drawing...
+```
+- Vì Circle chưa override phương thức draw() nên sẽ lấy draw của lớp Shape
 - Chúng ta truy cập thành viên dữ liệu bởi biến tham chiếu của lớp cha mà tham chiếu tới đối tượng lớp con. Khi chúng ta truy cập thành viên dữ liệu mà không bị ghi đè, thì nó sẽ luôn luôn truy cập thành viên dữ liệu của lớp cha
 ```
 class Bike{  
