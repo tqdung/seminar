@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TSimpleServer;
+import org.apache.thrift.server.TThreadPoolServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 import org.apache.thrift.transport.TTransportException;
@@ -20,16 +21,19 @@ import org.apache.thrift.transport.TTransportException;
  * @author hoang
  */
 public class TestDatabaseThriftServer {
+
     public static skillManager.Processor processor;
     public static SkillManagerHandler handler;
-    public static void main(String []args) throws TTransportException, PropertyVetoException{
+
+    public static void main(String[] args) throws TTransportException, PropertyVetoException {
         handler = new SkillManagerHandler();
         processor = new skillManager.Processor(handler);
-        Runnable run = new Runnable(){
-            public void run(){
+        Runnable run = new Runnable() {
+            public void run() {
                 try {
-                    TServerTransport serverTransport = new TServerSocket(8080);
-                    TServer server = new TSimpleServer(new TServer.Args(serverTransport).processor(processor));
+                    TServerTransport serverTransport = new TServerSocket(8888);
+                    TServer server = new TThreadPoolServer(new TThreadPoolServer.Args(serverTransport)
+                            .processor(processor));
                     server.serve();
                 } catch (TTransportException ex) {
                     Logger.getLogger(TestDatabaseThriftServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -38,7 +42,6 @@ public class TestDatabaseThriftServer {
         };
         new Thread(run).start();
     }
-    
+
     // define interface ->viet  write implemnt
-    
 }

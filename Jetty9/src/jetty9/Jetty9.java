@@ -5,30 +5,24 @@
  */
 package jetty9;
 
+import com.duong.skill.thrift_connection.SkillClientManagerImpl;
+import com.duong.skill.thrift_connection.SkillClientProvider;
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
 import org.eclipse.jetty.security.HashLoginService;
 import org.eclipse.jetty.security.authentication.FormAuthenticator;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.DefaultHandler;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.security.Constraint;
-import org.eclipse.jetty.util.security.Password;
-import org.eclipse.jetty.websocket.server.WebSocketHandler;
-import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
-
 
 /**
  *
  * @author hoang
  */
-
 public class Jetty9 {
+
+    public static final String CONTEXT_PATH = "/example";
 
     /**
      * @param args the command line arguments
@@ -45,12 +39,19 @@ public class Jetty9 {
 //        server.setHandler(wsHandler);
 //        server.start();
 //        server.join();
-        ServletContextHandler context = new ServletContextHandler(server, "/example", ServletContextHandler.SECURITY);
-	context.addServlet(HelloServlet.class, "/");
-                
+
+        SkillClientProvider skillClientProvider = new SkillClientManagerImpl("localhost", 8888);
+
+        ServletContextHandler context = new ServletContextHandler(server, CONTEXT_PATH, ServletContextHandler.SECURITY);
+        context.addServlet(new ServletHolder(new HelloServlet()), "/login");
+
+        context.addServlet(new ServletHolder(new GoodbyeServlet()), "/bye");
+        context.addServlet(new ServletHolder(new SkillServlet(skillClientProvider)), "/skill");
+        context.addServlet(new ServletHolder(new SkillServlet(skillClientProvider)), "/skill/*");
+
         Constraint constraint = new Constraint();
         constraint.setName(Constraint.__FORM_AUTH);
-        constraint.setRoles(new String[]{"user","admin","moderator"});
+        constraint.setRoles(new String[]{"user", "admin", "moderator"});
         constraint.setAuthenticate(true);
 
         ConstraintMapping constraintMapping = new ConstraintMapping();
@@ -66,8 +67,8 @@ public class Jetty9 {
         FormAuthenticator authenticator = new FormAuthenticator("/login", "/login", false);
         securityHandler.setAuthenticator(authenticator);
         context.setSecurityHandler(securityHandler);
-	server.start();
+        server.start();
         server.join();
     }
-    
+
 }

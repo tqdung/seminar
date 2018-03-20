@@ -25,14 +25,20 @@ public class TestDatabaseThriftClient {
         TTransport transport;
         try {
 
-            transport = new TSocket("localhost", 8080);
+            transport = new TSocket("localhost", 8888);
             transport.open();
             TProtocol protocol = new TBinaryProtocol(transport);
             skillManager.Iface clientThrift = new skillManager.Client(protocol);
+            transport = new TSocket("localhost", 8888);
+            transport.open();
+            protocol = new TBinaryProtocol(transport);
+            skillManager.Iface anotherClientThrift = new skillManager.Client(protocol);
 
-            //Skill skill1 = clientThrift.findByID(4);
-            //System.out.println(skill1.name);
-            //        
+            Skill skill1 = clientThrift.findByID(1);
+            System.out.println(skill1.name);
+                    
+            List<Skill> findAllSkills = anotherClientThrift.findAllSkills();
+            System.out.println("findAllSkills = " + findAllSkills);
             //Skill insertSkill = new Skill(20,"JavaScript");
             //Skill skill2 = clientThrift.insertSkill(insertSkill);
             //System.out.println(skill2.name);
@@ -53,10 +59,14 @@ public class TestDatabaseThriftClient {
             //arrSkills.add(skill1);
             //arrSkills.add(skill2);
             //        
-            //List<Skill> arrSkillsGet = new ArrayList<Skill>();
-            //arrSkillsGet = clientThrift.multiInsert(arrSkills);
-            //for(int i=0;i<arrSkills.size();i++)
-            //  System.out.println(arrSkillsGet.get(i).name);
+//            List<Skill> arrSkills = new ArrayList<Skill>();
+//            List<Integer> listIDs = new ArrayList<Integer>();
+//            listIDs.add(1);
+//            listIDs.add(3);
+//            listIDs.add(4);
+//            arrSkills = clientThrift.multiGetByIDs(listIDs);
+//            for(int i=0;i<arrSkills.size();i++)
+//              System.out.println(arrSkills.get(i).name);
             //
             //clientThrift.multiDelete(arrSkills);
             transport.close();

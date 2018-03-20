@@ -70,7 +70,8 @@ public class SkillManagerHandler implements skillManager.Iface {
         try (Connection conn = poolCnn.getConnection()) {
             try (PreparedStatement stm = conn.prepareStatement(sql)) {
                 stm.setInt(1, id);
-                ResultSet rs = stm.executeQuery(sql);
+                stm.execute();
+                ResultSet rs = stm.getResultSet();
                 rs.first();
                 skill.id = rs.getInt("id");
                 skill.name = rs.getString("name");
@@ -179,6 +180,30 @@ public class SkillManagerHandler implements skillManager.Iface {
             System.out.println(ex.getMessage());
         }
         return skills;
+    }
+
+    @Override
+    public List<Skill> multiGetByIDs(List<Integer> ids) throws TException {
+        String sql = "select * from skills where id = ?";
+        List<Skill> listSkills = new ArrayList<Skill>();
+        try (Connection conn = poolCnn.getConnection()) {
+            try (PreparedStatement pstm = conn.prepareStatement(sql)) {
+                for(int i=0;i<ids.size();i++){
+                    pstm.setInt(1, ids.get(i));
+                    pstm.execute();
+                    ResultSet rs = pstm.getResultSet();
+                    rs.first();
+                    Skill skill = new Skill();
+                    skill.id = rs.getInt("id");
+                    skill.name = rs.getString("name");
+                    listSkills.add(skill);
+                }
+                pstm.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return listSkills;
     }
 
 }
