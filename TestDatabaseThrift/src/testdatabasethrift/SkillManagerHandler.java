@@ -149,12 +149,12 @@ public class SkillManagerHandler implements skillManager.Iface {
     }
 
     @Override
-    public void multiDelete(List<Skill> skills) throws TException {
+    public void multiDelete(List<Integer> ids) throws TException {
         String sql = "delete from skills where id = ?";
         try (Connection conn = poolCnn.getConnection()){
             PreparedStatement pstm = conn.prepareStatement(sql);
-            for(int i=0;i<skills.size();i++){
-                pstm.setInt(1, skills.get(i).id);
+            for(int i=0;i<ids.size();i++){
+                pstm.setInt(1, ids.get(i));
                 pstm.addBatch();
             }
             pstm.executeBatch();

@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jetty9;
+package com.duong.skill.server;
 
+import com.duong.skill.server.servlet.SkillServlet;
+import com.duong.skill.server.servlet.GoodbyeServlet;
+import com.duong.skill.server.servlet.HelloServlet;
 import com.duong.skill.thrift_connection.SkillClientManagerImpl;
 import com.duong.skill.thrift_connection.SkillClientProvider;
 import org.eclipse.jetty.security.ConstraintMapping;

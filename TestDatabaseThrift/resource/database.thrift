@@ -11,7 +11,7 @@ service skillManager{
     Skill updateByID(1: Skill skill);
     Skill insertSkill(1: Skill skill);
     list<Skill> multiUpdate(1: list<Skill> skills);
-    void multiDelete(1: list<Skill> skills);
+    void multiDelete(1: list<i32> ids);
     list<Skill> multiInsert(1: list<Skill> skills);
     list<Skill> multiGetByIDs(1: list<i32> ids); 
 }
