@@ -63,4 +63,8 @@ INFO: info log
 Mar 26, 2018 9:56:08 AM test.Test setup
 FINEST: something not important
 ```
-- Các thông tin trên log có cấu trúc gồm <time> <project>.<class> <function> | <level log> <log message>
+- Các thông tin trên log có cấu trúc gồm
+```
+<time> <project>.<class> <function>
+<LEVEL> <log message>
+```
