@@ -43,7 +43,7 @@ public class SkillClientManagerImpl implements SkillClientProvider {
             skillManager.Iface clientThrift = new skillManager.Client(protocol);
             return clientThrift;
         } catch (TTransportException ex) {
-            throw new RuntimeException("Cannot established conneciton", ex);
+            throw new TOpenConnectionException("Cannot established conneciton");
         }
 
     }

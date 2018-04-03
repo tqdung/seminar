@@ -20,14 +20,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.duong.skill.server.Jetty9;
+import com.duong.skill.thrift_connection.TOpenConnectionException;
+import java.util.Random;
 import org.apache.thrift.TException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author hoang
- */
 public class SkillServlet extends HttpServlet {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SkillServlet.class);
 
     private SkillClientProvider provider;
 
@@ -44,61 +46,75 @@ public class SkillServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (PrintWriter writer = resp.getWriter()) {
-            //get path info
-            String pathInfo = req.getPathInfo();
-            //path not have id
-            if (pathInfo == null) {
-                //return error code and error message
-                Response r = new Response();
-                r.errorCode = 400;
-                r.message = "ERROR DELETE WITHOUT ID";
-                r.data = null;
-                String json = gson.toJson(r);
-                writer.write(json);
-                return;
-            }
-            switch (pathInfo) {
-                case "":
-                case "/": {
-                    // return error
+            try {
+                //get path info
+                String pathInfo = req.getPathInfo();
+                //path not have id
+                if (pathInfo == null) {
+                    //return error code and error message
                     Response r = new Response();
                     r.errorCode = 400;
                     r.message = "ERROR DELETE WITHOUT ID";
                     r.data = null;
                     String json = gson.toJson(r);
                     writer.write(json);
-                    break;
+                    return;
                 }
-                //path had string
-                default:
-                    String path = normalizePathInfo(req.getPathInfo());
-                    Matcher matcher = IDS_REGEX.matcher(path.trim());
-                    //wrong string (not number)
-                    if (matcher.matches() == false) {
-                        //return error
+
+                switch (pathInfo) {
+                    case "":
+                    case "/": {
+                        // return error
                         Response r = new Response();
-                        r.errorCode = 0;
-                        r.message = "ERROR PUT STRING";
+                        r.errorCode = 400;
+                        r.message = "ERROR DELETE WITHOUT ID";
                         r.data = null;
                         String json = gson.toJson(r);
                         writer.write(json);
-                        return;
+                        break;
                     }
-                    // number -> delete skill by id
-                    List<Integer> listIDs = new ArrayList<>();
-                    listIDs = extractIDFromPath(path);
-                    provider.getClient().multiDelete(listIDs);
-                    break;
-            }
-        } catch (TException ex) {
+                    //path had string
+                    default:
+                        String path = normalizePathInfo(req.getPathInfo());
+                        Matcher matcher = IDS_REGEX.matcher(path.trim());
+                        //wrong string (not number)
+                        if (matcher.matches() == false) {
+                            //return error
+                            Response r = new Response();
+                            r.errorCode = 0;
+                            r.message = "ERROR PUT STRING";
+                            r.data = null;
+                            String json = gson.toJson(r);
+                            writer.write(json);
+                            return;
+                        }
+                        // number -> delete skill by id
+                        List<Integer> listIDs = new ArrayList<>();
+                        listIDs = extractIDFromPath(path);
+                        LOGGER.info("listIDs: {}", listIDs);
 
+                        provider.getClient().multiDelete(listIDs);
+                        break;
+                }
+            } catch (TException ex) {
+                ex.printStackTrace();
+                LOGGER.error("Thrift error asdasdas {} {}", new Object[]{"Text 1", new Random().nextBoolean(), ex});
+            } catch (TOpenConnectionException ex) {
+                LOGGER.error("Message from custom expception class: {}", new Object[]{ex.getMsg(), ex});
+            } catch (Exception ex) {
+                LOGGER.error("Exception {} {}", new Object[]{"Text 1", new Random().nextBoolean(), ex});
+                Response r = new Response();
+                r.errorCode = 400;
+                r.message = "CAN'T CONNECT TO THRIFT SERVER";
+                r.data = null;
+                String json = gson.toJson(r);
+            }
         }
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         try (PrintWriter writer = resp.getWriter()) {
             String path = normalizePathInfo(req.getPathInfo());
             switch (path) {
@@ -111,6 +127,7 @@ public class SkillServlet extends HttpServlet {
                     r.errorCode = 0;
                     r.message = "OK";
                     r.data = allSkills;
+                    LOGGER.info("Get info from user");
                     String json = gson.toJson(r);
                     writer.write(json);
                     break;
@@ -124,6 +141,7 @@ public class SkillServlet extends HttpServlet {
                         r.errorCode = 0;
                         r.message = "ERROR GET";
                         r.data = null;
+                        LOGGER.warn("Get info from user");
                         String json = gson.toJson(r);
                         writer.write(json);
                         return;
@@ -143,7 +161,7 @@ public class SkillServlet extends HttpServlet {
             }
             writer.flush();
         } catch (TException ex) {
-
+            LOGGER.error("Exception {}", new Object[]{"Can't connect to thrift server", ex});
         }
     }
 

@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/hoang/mygit/Jetty9/src/com/duong/skill/server/servlet/SkillServlet.java</file>
-            <file>file:/home/hoang/mygit/Jetty9/src/com/duong/skill/thrift_connection/SkillClientProvider.java</file>
-            <file>file:/home/hoang/mygit/Jetty9/src/jetty9/MyWebSocketHandler.java</file>
-            <file>file:/home/hoang/mygit/Jetty9/src/com/duong/skill/server/servlet/GoodbyeServlet.java</file>
-            <file>file:/home/hoang/mygit/Jetty9/src/com/duong/skill/server/Jetty9.java</file>
-            <file>file:/home/hoang/mygit/Jetty9/src/com/duong/skill/server/servlet/HelloServlet.java</file>
-            <file>file:/home/hoang/mygit/Jetty9/src/com/duong/skill/thrift_connection/SkillClientManagerImpl.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

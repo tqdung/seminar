@@ -1,0 +1,4 @@
+Mar 26, 2018 2:21:26 PM jetty9.LoggingHandler setFineMsg
+FINE: Get data from user
+Mar 26, 2018 2:21:26 PM jetty9.LoggingHandler setInfoMsg
+INFO: Get info from user

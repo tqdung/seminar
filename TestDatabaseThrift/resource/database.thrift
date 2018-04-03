@@ -1,17 +1,17 @@
-namespace java com.duong.skill
-struct Skill{
+namespace java com.duong.TSkill
+struct TSkill{
     1: i32 id,
     2: string name
 
 }
-service skillManager{
-    list<Skill> findAllSkills();
-    Skill findByID(1: i32 id);
+service TSkillManager{
+    list<TSkill> findAllTSkills();
+    TSkill findByID(1: i32 id);
     void deleteByID(1: i32 id);
-    Skill updateByID(1: Skill skill);
-    Skill insertSkill(1: Skill skill);
-    list<Skill> multiUpdate(1: list<Skill> skills);
+    TSkill updateByID(1: TSkill TSkill);
+    TSkill insertTSkill(1: TSkill TSkill);
+    list<TSkill> multiUpdate(1: list<TSkill> TSkills);
     void multiDelete(1: list<i32> ids);
-    list<Skill> multiInsert(1: list<Skill> skills);
-    list<Skill> multiGetByIDs(1: list<i32> ids); 
+    list<TSkill> multiInsert(1: list<TSkill> TSkills);
+    list<TSkill> multiGetByIDs(1: list<i32> ids); 
 }
