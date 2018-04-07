@@ -22,6 +22,15 @@ public class Cat extends Animal {
     }
      
 }
+
+public class Dog extends Animal{
+
+    @Override public void hienThiTiengKeu(){
+        //do something
+        //flow
+        System.out.println("Cho");
+    }
+}
 ```
 ```
 public class Main {
@@ -37,6 +46,7 @@ public class Main {
  
 }
 ```
+- Output : `Cho Meo`
 - Một lớp trừu tượng `không thể khởi tạo`. Nếu ta khai báo `Animal a = new Animal()` compiler sẽ tự động báo lỗi
 
 
